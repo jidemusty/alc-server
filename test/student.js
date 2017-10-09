@@ -23,3 +23,22 @@ describe('/GET students', () => {
     });
 });
 
+
+describe('POST /student', () => {
+    it('should return the created student successfully', (done) => {
+      chai.request(server)
+        .post('/api/student')
+        .send({
+          name: 'test name',
+          age: '12',
+          sex: 'male',
+          email: 'test@test.com',
+          department: 'Test department'
+        })
+        .end((err, res) => {
+            res.should.have.status(200);
+            res.body.department.should.be.eql('Test department');
+        done();
+        });
+    });
+});
