@@ -5,7 +5,7 @@ import path from 'path';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
-import errorHandlers from './handlers/errorHandlers';
+import errorHandlers from '../handlers/errorHandlers';
 
 import routes from './routes/index';
 
