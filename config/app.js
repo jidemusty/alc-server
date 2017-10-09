@@ -4,10 +4,10 @@ import MongoStore from 'connect-mongo';
 import path from 'path';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import expressValidator from 'express-validator';
+import expressValidation from 'express-validation';
 import errorHandlers from '../handlers/errorHandlers';
 
-import routes from './routes/index';
+import routes from '../routes/index';
 
 // create our express app
 const app = express();
@@ -18,12 +18,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors());
 
-// Exposes a bunch of methods for validating data.
-app.use(expressValidator());
-
 // After all that above middleware, we finally handle our own routes!
 app.use('/api', routes);
 
+app.use((err, req, res, next) => {
+    if (err instanceof expressValidation.ValidationError) {
+      res.status(err.status).json(err);
+    } else {
+      res.status(500)
+        .json({
+          status: err.status,
+          message: err.message
+        });
+    }
+});
 
 // If that above routes didnt work, we 404 them and forward to error handler
 app.use(errorHandlers.notFound);

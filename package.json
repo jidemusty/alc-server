@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./start.js ./test/* --exec babel-node",
+    "start": "nodemon ./start.js --exec babel-node",
     "test": "mocha --compilers js:babel-core/register --timeout 10000"
   },
   "keywords": [],
@@ -16,6 +16,7 @@
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "^4.16.1",
+    "express-validation": "^1.0.2",
     "express-validator": "^4.2.1",
     "forever": "^0.15.3",
     "joi": "^11.3.3",
