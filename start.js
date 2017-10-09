@@ -10,6 +10,9 @@ mongoose.Promise = global.Promise
 mongoose.connection.on('error', (err) => {
     console.error(`${err.message}`);
 });
+mongoose.connection.on('connected', () => {
+    console.log(`Connected to database: ${process.env.DATABASE}`);
+});
 
 // import student model
 // require('./models/Student');
