@@ -32,7 +32,7 @@ function create(req, res, next) {
 function update(req, res, next) {
     const student = req.student;
     Object.assign(student, req.body);
-  
+    
     Student.save()
       .then(() => res.sendStatus(204),
         (e) => next(e));
