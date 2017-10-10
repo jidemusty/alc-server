@@ -5,7 +5,7 @@ const studentSchema = new mongoose.Schema({
 
     name: { type: String, trim: true, required: 'Please enter a student name!' },
 
-    email: { type: String, trim: true, required: 'Please enter an email!' },
+    email: { type: String, unique: true, trim: true, required: 'Please enter an email!' },
 
     age: { type: Number, trim: true, required: 'Please enter a age!' },
 
