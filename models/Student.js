@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import uniqueValidator from 'mongoose-unique-validator';
 mongoose.Promise = global.Promise;
 
 const studentSchema = new mongoose.Schema({
@@ -16,5 +17,7 @@ const studentSchema = new mongoose.Schema({
     created: { type: Date, default: Date.now },
     
 });
+
+studentSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('Student', studentSchema);
