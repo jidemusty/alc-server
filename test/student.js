@@ -29,21 +29,6 @@ describe('/GET students', () => {
 });
 
 describe('Get a student by id', () => {
-    let student = { 
-        name: 'ALC Andela',
-        age: 23,
-        sex: 'Male',
-        email: 'andela@andela.com',
-        department: 'Creatives'
-    };
-    it('should get a student', (done) => { 
-        superTest(server)
-            .get(`/api/student/:${student._id}`)
-            .end((err, res) => { 
-                expect(res.status).to.equal(200);
-                expect(res.body.name).to.equal('ALC Andela'); 
-                done(); 
-      }); 
-    }); 
-  });
+    
+});
   
