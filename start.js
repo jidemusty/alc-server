@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import config from './config/environments';
 
 // import environmental variables from our .env file
 require('dotenv').config({ path: '.env' });
@@ -14,8 +15,9 @@ mongoose.connection.on('connected', () => {
     console.log(`Connected to database: ${process.env.DATABASE}`);
 });
 
-// import student model
-// require('./models/Student');
+if (config.env === 'development') {
+    mongoose.set('debug', true);
+}
 
 // start our app!
 import app from './config/app';

@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./start.js --exec babel-node",
-    "test": "mocha --compilers js:babel-core/register --timeout 10000"
+    "start": "NODE_ENV=production nodemon ./start.js --exec babel-node",
+    "test": "NODE_ENV=development mocha --compilers js:babel-core/register --timeout 10000"
   },
   "keywords": [],
   "author": "",

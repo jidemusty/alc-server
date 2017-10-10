@@ -33,8 +33,6 @@ app.use((err, req, res, next) => {
     }
 });
 
-// mongodb://localhost:27017/alcserver
-// mongodb://jidemusty:jidemustapha@ds115045.mlab.com:15045/alc-server
 // If that above routes didnt work, we 404 them and forward to error handler
 app.use(errorHandlers.notFound);
 
