@@ -1,5 +1,5 @@
 export default {
     env: 'development',
-    db: 'mongodb://localhost:27017/alcserver',
+    db: 'mongodb://jidemusty:jidemustapha@ds115045.mlab.com:15045/alc-server',
     port: process.env.PORT || 4000
   };
