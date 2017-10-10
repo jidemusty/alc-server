@@ -28,23 +28,22 @@ describe('/GET students', () => {
     });
 });
 
-describe('/POST Create Student', () => { 
-    it('should create a student', (done) => { 
-      superTest(server)
-        .post('/api/student')
-        .send({
-            name: 'ALC Andela',
-            age: 23,
-            sex: 'Male',
-            email: 'andela@andela.com',
-            department: 'Creatives'
-        })
-        .end((err, res) => { 
-            expect(res.status).to.equal(200);
-            expect(res.body.department).to.equal('Creatives');
-            expect(res.body._id).to.exist;
-            done(); 
-        });
+describe('Get a student by id', () => {
+    let student = { 
+        name: 'ALC Andela',
+        age: 23,
+        sex: 'Male',
+        email: 'andela@andela.com',
+        department: 'Creatives'
+    };
+    it('should get a student', (done) => { 
+        superTest(server)
+            .get(`/api/student/:${student._id}`)
+            .end((err, res) => { 
+                expect(res.status).to.equal(200);
+                expect(res.body.name).to.equal('ALC Andela'); 
+                done(); 
+      }); 
     }); 
-}); 
-
+  });
+  
