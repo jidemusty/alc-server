@@ -14,7 +14,11 @@ router.post(
     studentController.create
 );
 
-router.get('/student/:id', studentController.get);
+router.get(
+    '/student/:id',
+    validate(validations.getStudent),
+    studentController.get
+);
 
 router.put(
     '/student/:id',
@@ -22,7 +26,7 @@ router.put(
     studentController.update
 );
 
-router.delete('/student/:id', studentController.remove);
+router.delete('/student/:id', studentController.delete);
 
 router.param('id', validate(validations.getStudent));
 router.param('id', studentController.load);

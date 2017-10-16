@@ -1,22 +1,21 @@
 import Student from '../models/Student';
 
-function load(req, res, next, id) {
-    Student.findById(id)
+exports.list = (req, res, next) => {
+    
+    const { limit = 50, skip = 0 } = req.query;
+    
+    Student.find()
+        .skip(skip)
+        .limit(limit)
         .exec()
-        .then((student) => {
-            req.student = student;
-            return next();
-        }, (e) => next(e));
+        .then((students) => res.json(students),
+        (e) => next(e));
 }
 
-function get(req, res) {
-    return res.json(req.student);
-}
-
-function create(req, res, next) {
-
+exports.create = (req, res, next) => {
+    
     const { name, email, age, sex, department } = req.body;
-
+    
     Student.create({
         name,
         email,
@@ -28,27 +27,48 @@ function create(req, res, next) {
         return res.json(savedStudent);
     }, (e) => next(e));
 }
-
-function update(req, res, next) {
-    const student = req.student;
-    Object.assign(student, req.body);
     
-    Student.save()
-      .then(() => res.sendStatus(204),
-        (e) => next(e));
-}
+
+exports.get = (req, res) => {
+  Student.findById(req.params.id, (err, student) => {
+    if (err)
+      res.send(err);
+    res.json(student);
+  });
+};
+
+exports.update = (req, res) => {
+    Student.findOneAndUpdate(
+        {
+            _id: req.params.id},
+            req.body, 
+            { new: true }, (err, student) => {
+        if (err)
+            res.send(err);
+        res.json(student);
+    });
+};
+
+
+// function update(req, res, next) {
+//     const student = req.student;
+//     Object.assign(student, req.body);
+    
+//     Student.save()
+//       .then(() => res.sendStatus(204),
+//         (e) => next(e));
+// }
   
-function list(req, res, next) {
+exports.delete = (req, res) => {
+    Student.remove({
+        _id: req.params.id
+    }, (err, student) => {
+        if (err)
+            res.send(err);
+        res.json({ message: 'Student successfully deleted' });
+    });
+};
 
-    const { limit = 50, skip = 0 } = req.query;
-
-    Student.find()
-      .skip(skip)
-      .limit(limit)
-      .exec()
-      .then((students) => res.json(students),
-        (e) => next(e));
-}
   
 function remove(req, res, next) {
     const student = req.student;
@@ -56,5 +76,3 @@ function remove(req, res, next) {
       .then(() => res.sendStatus(204),
         (e) => next(e));
 }
-
-export default { load, get, create, update, list, remove };
