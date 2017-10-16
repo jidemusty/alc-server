@@ -30,49 +30,54 @@ exports.create = (req, res, next) => {
     
 
 exports.get = (req, res) => {
-  Student.findById(req.params.id, (err, student) => {
-    if (err)
-      res.send(err);
-    res.json(student);
-  });
-};
 
-exports.update = (req, res) => {
-    Student.findOneAndUpdate(
-        {
-            _id: req.params.id},
-            req.body, 
-            { new: true }, (err, student) => {
-        if (err)
-            res.send(err);
+    const _id = req.params.id;
+
+    Student.findOne({ _id }, (err, student) => {
+
+        if (err) {
+            res.status(400).json(err);
+        }
+        
+        if (!student) {
+            res.status(404).json({ message: 'Student Not Found' });
+        }
+    
         res.json(student);
     });
 };
 
+exports.update = (req, res) => {
 
-// function update(req, res, next) {
-//     const student = req.student;
-//     Object.assign(student, req.body);
-    
-//     Student.save()
-//       .then(() => res.sendStatus(204),
-//         (e) => next(e));
-// }
-  
-exports.delete = (req, res) => {
-    Student.remove({
-        _id: req.params.id
-    }, (err, student) => {
-        if (err)
-            res.send(err);
-        res.json({ message: 'Student successfully deleted' });
+    const _id = req.params.id;
+
+    Student.findOneAndUpdate({ _id },
+        req.body, 
+        { new: true },
+        (err, student) => {
+            if (err) {
+                res.status(400).json(err);
+            }
+                
+            res.json(student);
     });
 };
 
   
-function remove(req, res, next) {
-    const student = req.student;
-    student.remove()
-      .then(() => res.sendStatus(204),
-        (e) => next(e));
-}
+exports.delete = (req, res) => {
+
+    const _id = req.params.id;
+
+    Student.findOneAndRemove({ _id }, (err, student) => {
+        
+        if (err) {
+            res.status(400).json(err);
+        }
+            
+        if (!student) {
+            res.status(404).json({ message: 'Student Not Found' });
+        }
+
+        res.json({ message: `Student ${student._id} successfully deleted` });
+    });
+};

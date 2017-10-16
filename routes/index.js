@@ -9,26 +9,23 @@ import studentController from '../controllers/studentController';
 router.get('/students', studentController.list);
 
 router.post(
-    '/student', 
+    '/students', 
     validate(validations.createStudent), 
     studentController.create
 );
 
 router.get(
-    '/student/:id',
+    '/students/:id',
     validate(validations.getStudent),
     studentController.get
 );
 
 router.put(
-    '/student/:id',
+    '/students/:id',
     validate(validations.updateStudent),
     studentController.update
 );
 
-router.delete('/student/:id', studentController.delete);
-
-router.param('id', validate(validations.getStudent));
-router.param('id', studentController.load);
+router.delete('/students/:id', studentController.delete);
 
 module.exports = router;
